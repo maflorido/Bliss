@@ -1,9 +1,11 @@
-﻿namespace BlissRecruitment.Domain.Repository
+﻿using System.Threading.Tasks;
+
+namespace BlissRecruitment.Domain.Repository
 {
     public interface IRepository<TEntity>
     {
         TEntity GetById(int id);
 
-        void Save(TEntity entity);
+        Task Save(TEntity entity);
     }
 }

@@ -4,9 +4,8 @@ using System.Linq;
 
 namespace BlissRecruitment.Domain.Questions
 {
-    public class QuestionEntity
+    public class QuestionEntity : BaseEntity
     {
-        public int Id { get; private set; }
 
         public string Question { get; private set; }
 

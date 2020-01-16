@@ -2,9 +2,8 @@
 
 namespace BlissRecruitment.Domain.Questions
 {
-    public class ChoiceEntity
+    public class ChoiceEntity : BaseEntity
     {
-        public int Id { get; private set; }
         public string Choice { get; private set; }
         public int Votes { get; set; }
 
