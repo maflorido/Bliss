@@ -15,7 +15,7 @@ namespace BlissRecruitment.Domain.Questions
 
         public DateTime PublishedAt { get; private set; }
 
-        public IEnumerable<ChoiceEntity> Choices { get; private set; }
+        public virtual IEnumerable<ChoiceEntity> Choices { get; private set; }
 
         public QuestionEntity(string question, string imageUrl, string thumbUrl, List<ChoiceEntity> choices)
         {

@@ -23,10 +23,10 @@ namespace BlissRecruitment.Api
         {
             services.AddControllers();
             services.AddSingleton(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddDbContext<ApplicationDbContext>(opt => 
-            //{
-            //    opt.UseSqlServer(Configuration.GetConnectionString(""));
-            //});
+            services.AddDbContext<ApplicationDbContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("ApiDataBase"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

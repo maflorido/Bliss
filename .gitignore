@@ -133,3 +133,4 @@ $RECYCLE.BIN/
 _NCrunch*
 /.dockerignore
 /.vs/BlissRecruitment/v16/Server/sqlite3
+/.vs/BlissRecruitment/DesignTimeBuild
