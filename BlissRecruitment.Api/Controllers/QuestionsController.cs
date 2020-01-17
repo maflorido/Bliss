@@ -10,10 +10,12 @@ namespace BlissRecruitment.Api.Controllers
     public class QuestionsController : ControllerBase
     {
         private readonly IRepository<QuestionEntity> _questionRepository;
+        private readonly QuestionStorer _questionStorer;
 
-        public QuestionsController(IRepository<QuestionEntity> questionRepository)
+        public QuestionsController(IRepository<QuestionEntity> questionRepository, QuestionStorer questionStorer)
         {
             _questionRepository = questionRepository;
+            _questionStorer = questionStorer;
         }
 
         [HttpGet]
@@ -29,5 +31,12 @@ namespace BlissRecruitment.Api.Controllers
             QuestionEntity questions = _questionRepository.GetById(questionId);
             return Ok(questions);
         }
+
+        [HttpPost]
+        public IActionResult Post()
+        {
+            return Ok();
+        }
+        
     }
 }
