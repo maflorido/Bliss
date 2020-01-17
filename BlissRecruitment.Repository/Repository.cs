@@ -1,5 +1,6 @@
 ﻿using BlissRecruitment.Domain;
 using BlissRecruitment.Domain.Repository;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +21,12 @@ namespace BlissRecruitment.Repository
             return _context.Set<TEntity>().FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task Save(TEntity entity)
+        public IEnumerable<TEntity> List()
+        {
+            return _context.Set<TEntity>().ToList();
+        }
+
+        public async Task Create(TEntity entity)
         {
             await _context.AddAsync(entity);
         }

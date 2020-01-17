@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlissRecruitment.Domain.Repository
 {
@@ -6,6 +7,8 @@ namespace BlissRecruitment.Domain.Repository
     {
         TEntity GetById(int id);
 
-        Task Save(TEntity entity);
+        IEnumerable<TEntity> List();
+
+        Task Create(TEntity entity);
     }
 }

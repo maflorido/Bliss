@@ -15,21 +15,23 @@ namespace BlissRecruitment.Domain.Questions
 
         public DateTime PublishedAt { get; private set; }
 
-        public virtual IEnumerable<ChoiceEntity> Choices { get; private set; }
+        public ICollection<ChoiceEntity> Choices { get; private set; }
 
-        public QuestionEntity(string question, string imageUrl, string thumbUrl, List<ChoiceEntity> choices)
+        protected QuestionEntity() { }
+
+        public QuestionEntity(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
             Validate(question, imageUrl, thumbUrl, choices);
             SetValues(question, imageUrl, thumbUrl, choices);
         }
 
-        public void Update(string question, string imageUrl, string thumbUrl, List<ChoiceEntity> choices)
+        public void Update(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
             Validate(question, imageUrl, thumbUrl, choices);
             SetValues(question, imageUrl, thumbUrl, choices);
         }
 
-        private void Validate(string question, string imageUrl, string thumbUrl, List<ChoiceEntity> choices)
+        private void Validate(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
             Question = question ?? throw new Exception("Question is required");
             ImageUrl = imageUrl ?? throw new Exception("Image Url is required");
@@ -38,7 +40,7 @@ namespace BlissRecruitment.Domain.Questions
                 throw new Exception("Choices is required");
         }
 
-        private void SetValues(string question, string imageUrl, string thumbUrl, List<ChoiceEntity> choices)
+        private void SetValues(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
             Question = question;
             ImageUrl = imageUrl;

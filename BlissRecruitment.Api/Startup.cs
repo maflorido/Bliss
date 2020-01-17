@@ -1,3 +1,4 @@
+using BlissRecruitment.Domain.Questions;
 using BlissRecruitment.Domain.Repository;
 using BlissRecruitment.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace BlissRecruitment.Api
 {
@@ -22,11 +24,13 @@ namespace BlissRecruitment.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
-                opt.UseSqlServer(Configuration.GetConnectionString("ApiDataBase"));
+                opt.UseNpgsql(Configuration.GetConnectionString("ApiDataBase"),
+                    x => x.MigrationsAssembly(Assembly.GetAssembly(typeof(ApplicationDbContext)).FullName));
             });
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<QuestionStorer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
