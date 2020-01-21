@@ -7,7 +7,7 @@ Requirements:
 - vscode or visual studio 2019
 
 How to build:
-- Navigate to docker-compose.yml directory, using CMD. The file is in solution directory!
+- Navigate to docker-compose.yml directory, using CMD. The file is at the solution directory.
 - run the command docker-compose up
 - open the sln using the IDE that you have installed
 
