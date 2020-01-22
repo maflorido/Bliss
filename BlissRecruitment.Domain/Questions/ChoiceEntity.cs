@@ -7,14 +7,16 @@ namespace BlissRecruitment.Domain.Questions
         public string Choice { get; private set; }
         public int Votes { get; set; }
 
-        public ChoiceEntity(string choice, int votes)
+        public ChoiceEntity(int id, string choice, int votes)
         {
-            Choice = choice ?? throw new Exception("Choice is required");
+            Id = id;
+            Choice = choice ?? throw new DomainException("Choice is required");
             Votes = votes;
         }
 
-        public void Update(int votes)
+        public void Update(string choice, int votes)
         {
+            Choice = choice;
             Votes = votes;
         }
     }

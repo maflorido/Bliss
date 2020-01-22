@@ -8,10 +8,9 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: "bliss123"
-    networks:
-      - postgres-compose-network
-    volumes:
-      - /home/renatogroffe/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data
+      POSTGRES_USER: "userapi"
+      POSTGRES_DB: "blissdb"    
+    
    
   teste-pgadmin-compose:
     image: dpage/pgadmin4
@@ -22,9 +21,4 @@ services:
       - "16543:80"
     depends_on:
       - postgres
-    networks:
-      - postgres-compose-network
-
-networks: 
-  postgres-compose-network:
-    driver: bridge
+    

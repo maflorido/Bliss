@@ -1,3 +1,4 @@
+using BlissRecruitment.Domain;
 using BlissRecruitment.Domain.Questions;
 using BlissRecruitment.Domain.Repository;
 using BlissRecruitment.Repository;
@@ -31,11 +32,19 @@ namespace BlissRecruitment.Api
             });
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<QuestionStorer>();
+            services.AddScoped<IUnitOfwork, UnitOfwork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(async (context, next) => {
+                await next.Invoke();
+
+                IUnitOfwork unitOfWork = context.RequestServices.GetService<IUnitOfwork>();
+                await unitOfWork.Commit();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -49,7 +58,7 @@ namespace BlissRecruitment.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers();                
             });
         }
     }

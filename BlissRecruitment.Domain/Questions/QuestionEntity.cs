@@ -19,33 +19,37 @@ namespace BlissRecruitment.Domain.Questions
 
         protected QuestionEntity() { }
 
-        public QuestionEntity(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
+        public QuestionEntity(int id, string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
             Validate(question, imageUrl, thumbUrl, choices);
-            SetValues(question, imageUrl, thumbUrl, choices);
+            SetValues(id, question, imageUrl, thumbUrl, choices);
+            
         }
 
-        public void Update(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
+        public void Update(int id, string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
             Validate(question, imageUrl, thumbUrl, choices);
-            SetValues(question, imageUrl, thumbUrl, choices);
+            SetValues(id, question, imageUrl, thumbUrl);            
         }
 
         private void Validate(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
         {
-            Question = question ?? throw new Exception("Question is required");
-            ImageUrl = imageUrl ?? throw new Exception("Image Url is required");
-            ThumbUrl = thumbUrl ?? throw new Exception("Thumb Url is required");
+            Question = question ?? throw new DomainException("Question is required");
+            ImageUrl = imageUrl ?? throw new DomainException("Image Url is required");
+            ThumbUrl = thumbUrl ?? throw new DomainException("Thumb Url is required");
             if (choices == null || !choices.Any())
-                throw new Exception("Choices is required");
+                throw new DomainException("Choices is required");
         }
 
-        private void SetValues(string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices)
+        private void SetValues(int id, string question, string imageUrl, string thumbUrl, ICollection<ChoiceEntity> choices = null)
         {
+            Id = id;
             Question = question;
             ImageUrl = imageUrl;
             ThumbUrl = thumbUrl;
-            Choices = new List<ChoiceEntity>(choices);
+            if (choices != null)
+                Choices = new List<ChoiceEntity>(choices);
+            PublishedAt = DateTime.Now;
         }
     }
 }

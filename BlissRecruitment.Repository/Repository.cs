@@ -1,7 +1,10 @@
 ﻿using BlissRecruitment.Domain;
 using BlissRecruitment.Domain.Repository;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BlissRecruitment.Repository
@@ -16,14 +19,34 @@ namespace BlissRecruitment.Repository
             _context = context;
         }
 
-        public TEntity GetById(int id)
+        public TEntity GetById(int id, params Expression<Func<TEntity, object>>[] includes)
         {
-            return _context.Set<TEntity>().FirstOrDefault(x => x.Id == id);
+            var query = _context.Set<TEntity>().AsQueryable<TEntity>();
+
+            if (includes != null && includes.Length > 0)
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+            return query.FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<TEntity> List()
+        public IEnumerable<TEntity> List(params Expression<Func<TEntity, object>>[] includes)
         {
-            return _context.Set<TEntity>().ToList();
+            var query = _context.Set<TEntity>().AsQueryable<TEntity>();
+
+            if (includes != null && includes.Length > 0)
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+            return query.ToList();
+        }
+
+        public IEnumerable<TEntity> ListById(IEnumerable<int> ids, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _context.Set<TEntity>().AsQueryable<TEntity>();
+
+            if (includes != null && includes.Length > 0)
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+            return query.Where(x => ids.Contains(x.Id)).ToList();
         }
 
         public async Task Create(TEntity entity)
