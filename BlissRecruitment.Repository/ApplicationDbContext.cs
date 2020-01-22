@@ -7,7 +7,7 @@ namespace BlissRecruitment.Repository
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.Migrate();
+            Database.Migrate(); 
         }
 
         public DbSet<QuestionEntity> Question { get; set; }
